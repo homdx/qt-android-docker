@@ -73,7 +73,7 @@ RUN mkdir -p /tmp/qt-installer \
 	&& chmod u+rx /tmp/qt-installer/extract-qt-installer \
 	&& chmod u+rx /tmp/qt-installer/install-qt \
 	&& bash /tmp/qt-installer/install-qt $QT_VERSION \
-	&& rm -rf /tmp/qt-installer
+	&& rm -rf /tmp/qt-installer && rm -fv /qt-opensource-linux-*.run
 
 RUN wget https://raw.githubusercontent.com/homdx/qtci/master/bin/build-android-gradle-project --directory-prefix=/root/ \
 	&& chmod u+rx /root/build-android-gradle-project
