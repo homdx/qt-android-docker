@@ -42,10 +42,12 @@ RUN apt-get install -y \
 	libxss-dev \
 	libxtst6 \
 	libgl1-mesa-dev \
-	default-jdk \
-	&& apt-get clean
+	&& apt install apt-transport-https ca-certificates wget dirmngr gnupg software-properties-common -y \
+        && wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - \
+        && add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ \
+        && apt update && apt install adoptopenjdk-8-hotspot -y \
+        && apt-get clean
  
-
 
 ENV VERBOSE=1
 ENV QT_CI_PACKAGES=$QT_PACKAGES
