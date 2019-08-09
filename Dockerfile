@@ -1,7 +1,7 @@
 FROM debian:latest
 
 ARG QT_VERSION=5.12.4
-ARG NDK_VERSION=r17c
+ARG NDK_VERSION=r20
 ARG SDK_INSTALL_PARAMS=platform-tool,build-tools-20.0.0,android-19
 ARG QT_PACKAGES="qt,qt.qt5.5124,qt.qt5.5124.gcc_64,qt.qt5.5124.android_armv7"
 
@@ -73,7 +73,7 @@ RUN mkdir -p /tmp/qt-installer \
 	&& chmod u+rx /tmp/qt-installer/extract-qt-installer \
 	&& chmod u+rx /tmp/qt-installer/install-qt \
 	&& bash /tmp/qt-installer/install-qt $QT_VERSION \
-	&& rm -rf /tmp/qt-installer && rm -fv /qt-opensource-linux-*.run
+	&& rm -rf /tmp/qt-installer
 
 RUN wget https://raw.githubusercontent.com/homdx/qtci/master/bin/build-android-gradle-project --directory-prefix=/root/ \
 	&& chmod u+rx /root/build-android-gradle-project
@@ -87,11 +87,12 @@ ENV QT_HOME=/Qt/$QT_VERSION/
 
 # install sdk tools to accept licenses
 RUN mkdir -p /root/sdk-tools \
-	&& wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip --directory-prefix=/root/sdk-tools/ \
+	&& wget https://dl.google.com/android/repository/sdk-tools-windows-3859397.zip --directory-prefix=/root/sdk-tools/ \
 	&& cd /root/sdk-tools/ \
-	&& unzip sdk-tools-linux-4333796.zip \ 
-	&& rm -f sdk-tools-linux-4333796.zip \
-	&& yes | tools/bin/sdkmanager --licenses --sdk_root=$ANDROID_SDK_ROOT
+	&& unzip sdk-tools-windows-3859397.zip \ 
+	&& rm -f sdk-tools-windows-3859397.zip \
+	&& yes | tools/bin/sdkmanager --licenses --sdk_root=$ANDROID_SDK_ROOT \
+        && rm -vf android-ndk-*.zip  android-sdk*.tgz
 
 RUN ln -s /root/build-android-gradle-project /usr/bin/build-android-gradle-project
 
