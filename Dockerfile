@@ -52,7 +52,7 @@ RUN apt-get install -y \
 ENV VERBOSE=1
 ENV QT_CI_PACKAGES=$QT_PACKAGES
 
-RUN wget https://raw.githubusercontent.com/benlau/qtci/master/bin/install-android-sdk --directory-prefix=/tmp \
+RUN wget https://raw.githubusercontent.com/homdx/qtci/master/bin/install-android-sdk --directory-prefix=/tmp \
 	&& chmod u+rx /tmp/install-android-sdk \
 	&& /tmp/install-android-sdk $SDK_INSTALL_PARAMS
 
@@ -67,15 +67,15 @@ RUN apt-get install -y \
 
 RUN mkdir -p /tmp/qt-installer \
 	cd /tmp/qt-installer \
-	&& wget https://raw.githubusercontent.com/benlau/qtci/master/bin/extract-qt-installer --directory-prefix=/tmp/qt-installer/ \
-	&& wget https://raw.githubusercontent.com/benlau/qtci/master/recipes/install-qt --directory-prefix=/tmp/qt-installer/ \
+	&& wget https://raw.githubusercontent.com/homdx/qtci/master/bin/extract-qt-installer --directory-prefix=/tmp/qt-installer/ \
+	&& wget https://raw.githubusercontent.com/homdx/qtci/master/recipes/install-qt --directory-prefix=/tmp/qt-installer/ \
 	&& export PATH=$PATH:/tmp/qt-installer/ \
 	&& chmod u+rx /tmp/qt-installer/extract-qt-installer \
 	&& chmod u+rx /tmp/qt-installer/install-qt \
 	&& bash /tmp/qt-installer/install-qt $QT_VERSION \
 	&& rm -rf /tmp/qt-installer
 
-RUN wget https://raw.githubusercontent.com/benlau/qtci/master/bin/build-android-gradle-project --directory-prefix=/root/ \
+RUN wget https://raw.githubusercontent.com/homdx/qtci/master/bin/build-android-gradle-project --directory-prefix=/root/ \
 	&& chmod u+rx /root/build-android-gradle-project
 
 RUN echo $PATH
@@ -97,4 +97,3 @@ RUN ln -s /root/build-android-gradle-project /usr/bin/build-android-gradle-proje
 
 
 CMD ["/bin/bash"]
-
