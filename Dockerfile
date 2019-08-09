@@ -95,5 +95,4 @@ RUN mkdir -p /root/sdk-tools \
 
 RUN ln -s /root/build-android-gradle-project /usr/bin/build-android-gradle-project
 
-
-CMD ["/bin/bash"]
+CMD tail -f /var/log/faillog
