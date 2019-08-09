@@ -1,3 +1,7 @@
+[![](https://images.microbadger.com/badges/image/homdx/qt-android-docker.svg)](https://microbadger.com/images/homdx/qt-android-docker "Get your own image badge on microbadger.com")
+
+[![](https://images.microbadger.com/badges/version/homdx/qt-android-docker.svg)](https://microbadger.com/images/homdx/qt-android-docker "Get your own version badge on microbadger.com")
+
 This Dockerfile allows to build Qt applications inside a container container. It uses the awesome [qtci](https://github.com/benlau/qtci) scripts from [@benlau](https://github.com/benlau) for installing Qt, the android SDK + NDK. 
 
 # Usage
