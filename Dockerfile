@@ -1,9 +1,9 @@
 FROM debian:latest
 
-ARG QT_VERSION=5.12.0
+ARG QT_VERSION=5.12.4
 ARG NDK_VERSION=r17c
 ARG SDK_INSTALL_PARAMS=platform-tool,build-tools-20.0.0,android-19
-ARG QT_PACKAGES="qt,qt.qt5.5120,qt.qt5.5120.gcc_64,qt.qt5.5120.android_armv7"
+ARG QT_PACKAGES="qt,qt.qt5.5124,qt.qt5.5124.gcc_64,qt.qt5.5124.android_armv7"
 
 RUN dpkg --add-architecture i386
 RUN apt-get update
@@ -16,7 +16,7 @@ RUN apt-get install -y \
 	g++ \
 	make \
 	lib32z1 \
-	lib32ncurses5 \
+	lib32ncurses6 \
 	libbz2-1.0:i386 \
 	lib32stdc++6 \
 	&& apt-get clean
