@@ -87,10 +87,10 @@ ENV QT_HOME=/Qt/$QT_VERSION/
 
 # install sdk tools to accept licenses
 RUN mkdir -p /root/sdk-tools \
-	&& wget https://dl.google.com/android/repository/sdk-tools-windows-3859397.zip --directory-prefix=/root/sdk-tools/ \
+	&& wget https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip --directory-prefix=/root/sdk-tools/ \
 	&& cd /root/sdk-tools/ \
-	&& unzip sdk-tools-windows-3859397.zip \ 
-	&& rm -f sdk-tools-windows-3859397.zip \
+	&& unzip sdk-tools-linux-3859397.zip \ 
+	&& rm -f sdk-tools-linux-3859397.zip \
 	&& yes | tools/bin/sdkmanager --licenses --sdk_root=$ANDROID_SDK_ROOT \
         && rm -vf android-ndk-*.zip  android-sdk*.tgz
 
