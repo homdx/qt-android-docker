@@ -4,7 +4,11 @@ This Dockerfile allows to build Qt applications inside a container container. It
 
 [![](https://images.microbadger.com/badges/version/homdx/qt-android-docker.svg)](https://microbadger.com/images/homdx/qt-android-docker "Get your own version badge on microbadger.com")
 
+[![Build Status](https://travis-ci.org/homdx/qt-android-docker.svg?branch=513)](https://travis-ci.org/homdx/qt-android-docker)
+
 This Dockerfile allows to build Qt applications inside a container container. It uses the awesome [qtci](https://github.com/homdx/qtci) scripts from [@homdx](https://github.com/homdx) for installing Qt, the android SDK + NDK. 
+
+Builder with Clang SDK 28 NDK 19c Qt 5.13.1
 
 # Usage
 * Download the Dockerfile to your host system with 
