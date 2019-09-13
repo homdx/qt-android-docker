@@ -4,7 +4,7 @@ ARG QT_VERSION=5.13.1
 ARG NDK_VERSION=r19c
 ARG SDK_INSTALL_PARAMS=platform-tool,build-tools-28.0.2,android-21
 ARG QT_PACKAGES="qt,qt.qt5.5131,qt.qt5.5131.gcc_64,qt.qt5.5131.android_armv7"
-ARG ANDROID_SDK_ROOT=/tools
+ARG ANDROID_SDK_ROOT=/android-sdk-linux
 
 MAINTAINER HomDX
 
@@ -90,12 +90,12 @@ ENV ANDROID_SDK_ROOT="/android-sdk-linux"
 ENV QT_HOME=/Qt/$QT_VERSION/
 
 #Install SDK tools and accept licenses
-RUN ls -la && curl -Lo /tmp/sdk-tools.zip 'https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip' \
-   && unzip -q /tmp/sdk-tools.zip -d ${ANDROID_SDK_ROOT} \
-   && rm -fv /tmp/sdk-tools.zip \
-   && export PATH=/tools/tools/bin:$PATH \
-   && yes | sdkmanager --licenses \
-   && sdkmanager --update && yes | /android-sdk-linux/tools/bin/sdkmanager --licenses
+#RUN ls -la && curl -Lo /tmp/sdk-tools.zip 'https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip' \
+#   && unzip -q /tmp/sdk-tools.zip -d ${ANDROID_SDK_ROOT} \
+#   && rm -fv /tmp/sdk-tools.zip \
+#   && export PATH=/tools/tools/bin:$PATH \
+#   && yes | sdkmanager --licenses \
+#   && sdkmanager --update && yes | /android-sdk-linux/tools/bin/sdkmanager --licenses
 
 RUN ln -s /root/build-android-gradle-project /usr/bin/build-android-gradle-project
 
