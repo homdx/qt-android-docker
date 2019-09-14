@@ -1,5 +1,15 @@
 #!/bin/bash
 
+echo start build script
+echo QT version is $QT_VERSION
+echo show envs in build script
+set
+export PATH="/Qt/$QT_VERSION/android_armv7/bin/:${PATH}"
+echo show new envs in build script
+set
+export QT_HOME=/Qt/$QT_VERSION/
+echo search whereis
+whereis qmake
 
 apt install build-essential g++ -y && \
 apt-get install gcc git bison python gperf pkg-config gdb-multiarch -y && \
