@@ -94,7 +94,7 @@ RUN mkdir -p /tmp/qt-installer \
        && chmod u+rx /tmp/qt-installer/install-qt \
        && bash /tmp/qt-installer/install-qt $QT_VERSION \
        && rm -rf /tmp/qt-installer  \
-       && /build-from-source.sh
+       && set +ex && /build-from-source.sh
 
 RUN mkdir -p /usr/local/Qt-5.13.1/android_armv7 && ln -s /usr/local/Qt-5.13.1/bin /usr/local/Qt-5.13.1/android_armv7/bin
 
