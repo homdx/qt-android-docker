@@ -83,7 +83,7 @@ ARG QT_HOME=/Qt/$QT_VERSION/
 COPY build-from-source.sh /build-from-source.sh
 
 #download + install Qt
-RUN mkdir -p /tmp/qt-installer \
+RUN mkdir -p /tmp/qt-installer && \
        cd /tmp/qt-installer \
        && wget https://raw.githubusercontent.com/homdx/qtci/master/bin/extract-qt-installer --directory-prefix=/tmp/qt-installer/ \
        && wget https://raw.githubusercontent.com/homdx/qtci/master/recipes/install-qt --directory-prefix=/tmp/qt-installer/ \
