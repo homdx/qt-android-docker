@@ -83,17 +83,17 @@ ARG QT_HOME=/Qt/$QT_VERSION/
 COPY build-from-source.sh /build-from-source.sh
 
 #download + install Qt
-RUN mkdir -p /tmp/qt-installer && \
-       cd /tmp/qt-installer \
+RUN mkdir -p /tmp/qt-installer \
+       ^^ cd /tmp/qt-installer \
        && wget https://raw.githubusercontent.com/homdx/qtci/master/bin/extract-qt-installer --directory-prefix=/tmp/qt-installer/ \
        && wget https://raw.githubusercontent.com/homdx/qtci/master/recipes/install-qt --directory-prefix=/tmp/qt-installer/ \
        && export PATH=$PATH:/tmp/qt-installer/ \
        && chmod u+rx /tmp/qt-installer/extract-qt-installer \
        && chmod u+rx /tmp/qt-installer/install-qt \
        && bash /tmp/qt-installer/install-qt $QT_VERSION \
-       && rm -rf /tmp/qt-installer &&  \
-       && echo whereis qmake && whereis qmake && \
-       ./build-from-source.sh
+       && rm -rf /tmp/qt-installer  \
+       && echo whereis qmake && whereis qmake \
+       && /build-from-source.sh
 
 RUN mkdir -p /usr/local/Qt-5.13.1/android_armv7 && ln -s /usr/local/Qt-5.13.1/bin /usr/local/Qt-5.13.1/android_armv7/bin
 
