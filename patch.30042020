@@ -1,0 +1,11 @@
+--- build_ssl.sh	2020-05-26 06:15:01.000000000 +0000
++++ build_ssl.new	2020-05-26 08:34:38.679454993 +0000
+@@ -4,7 +4,7 @@
+ DEFAULT_PATH=$PATH
+ 
+ declare -a params=( 'no-asm' '' )
+-declare -A ssl_versions=( ["1.1.1g"]=~/android/ndk-bundle ["1.0.2u"]=~/android/android-ndk-r10e )
++declare -A ssl_versions=( ["1.1.1g"]=~/android/ndk-bundle )
+ 
+ # Qt up to Qt-5.12.3 are using openssl 1.0.x
+ # Qt 5.12.4 and 5.13.0 are using 1.1.x without any suffix, this will make he andorid linker to load system libs on Andorid 5 which will make Qt SSL support unusable in this combination
