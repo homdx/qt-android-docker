@@ -1,0 +1,43 @@
+FROM debian:10
+
+RUN apt update && apt upgrade
+RUN apt install wget build-essential \
+ ^libxcb.*-dev \
+libopenal-dev \
+flite1-dev   libspeechd-dev \
+libudev-dev \
+libinput-dev \
+libxkbcommon-x11-dev curl libssl-dev time \
+libx11-dev \
+\
+    libfontconfig1-dev \
+    libfreetype6-dev \
+    libx11-dev \
+    libxext-dev \
+    libxfixes-dev \
+    libxi-dev \
+    libxrender-dev \
+    libxcb1-dev \
+    libx11-xcb-dev \
+    libxcb-glx0-dev \
+    libxkbcommon-x11-dev \
+    mesa-common-dev \
+libgl1-mesa-dev  -y
+
+RUN curl http://192.168.0.95:8000/qt5-5150-linux.tar.gz -o qt-src.tar.gz && date && time tar -xf qt-src.tar.gz && ls -la && rm qt-src.tar.gz && date
+
+RUN cd qt5 && export OPENSSL_LIBS="-L$OPENSSL_DIR/lib -lssl -lcrypto -ldl -lpthread"; \
+#-optimize-size \
+./configure  -openssl-linked -static -skip qt3d -no-warnings-are-errors  -release -recheck-all -prefix /Static515 -opensource -confirm-license -nomake examples -nomake tests -c++std c++17 -I /usr/include/xcb/ -L /usr/lib/x86_64-linux-gnu/ \
+-xcb-xlib -xcb \
+-feature-thread \
+-feature-xkbcommon \
+-qt-libpng \
+-qt-libjpeg \
+-qt-zlib \
+-I /usr/include/xcb/ -L /usr/lib/x86_64-linux-gnu/
+
+RUN cd qt5 && make -j4 && echo done ok && date ||echo error && date
+RUN cd qt5 && make install || echo error install quick3d ... && cd /qt5/qtquickcontrols2 && /Static515/bin/qmake . && make -j4 && make install && echo done install quickcotrols2 && apt install openssh-client -y
+
+CMD tail -f /bin/true
