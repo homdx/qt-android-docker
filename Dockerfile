@@ -4,11 +4,12 @@ RUN dnf update -y && dnf install gcc unzip wget time aria2 which patch git make 
 #g++ from 30 and later fedora
 
 #RUN cd / &&  git clone git://code.qt.io/qt/qt5.git && cd qt5 && time perl ./init-repository 
-RUN ldd --version && sleep 60 && cd / && wget https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz &&  tar -xvf cmake-3.19.2.tar.gz && rm *.tar.gz
-RUN cd  cmake-3.19.2 && time ./configure && time make -j4 && time make install && time make clean
+RUN cd / && wget --quiet https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz &&  tar -xf cmake-3.19.2.tar.gz && rm *.tar.gz \
+    && cd  cmake-3.19.2 && time ./configure && time make -j4 && time make install && time make clean && rm -rf /cmake-3.19.2
+    
 RUN cd / &&  git clone git://code.qt.io/qt/qt5.git && cd qt5 && time perl ./init-repository
 
-RUN cd /qt5 && time ./configure -no-opengl && time make -j2 && echo build done && time make install && make clean || echo error build && date
+RUN cd /qt5 && time ./configure -no-opengl && time make -j2 && echo build done && time make install && make clean && time sh /clean-git.sh && echo restore is done to default cloned version from git || echo error build && date
 
 #COPY /build-from-source5140dev.sh /
 COPY clean-git.sh /
@@ -20,7 +21,7 @@ RUN apt-get update && apt-get upgrade -y
 COPY --from=builder /usr/local /6.0.0
 
 ARG NDK_VERSION=r21b
-ARG SDK_INSTALL_PARAMS=platform-tool,build-tools-28.0.2
+ARG SDK_INSTALL_PARAMS=platform-tool,build-tools-28.0.3
 ARG ANDROID_SDK_ROOT=/android-sdk-linux
 
 MAINTAINER HomDX
@@ -82,7 +83,7 @@ RUN apt-get update && apt-get upgrade -y
 COPY --from=builder2 /usr/local /usr/local
 
 ARG NDK_VERSION=r21b
-ARG SDK_INSTALL_PARAMS=platform-tool,build-tools-28.0.2
+ARG SDK_INSTALL_PARAMS=platform-tool,build-tools-28.0.3
 ARG ANDROID_SDK_ROOT=/android-sdk-linux
 
 MAINTAINER HomDX
@@ -93,6 +94,7 @@ RUN apt-get install -y \
     unzip \
     git \
     make \
+    time \
     && apt-get clean \
     && \
     apt install apt-transport-https ca-certificates wget dirmngr gnupg software-properties-common -y \
@@ -101,11 +103,15 @@ RUN apt-get install -y \
         && apt update && apt install adoptopenjdk-8-hotspot -y \
         && apt-get clean
 
+RUN wget https://raw.githubusercontent.com/homdx/qtci/513/bin/install-android-sdk --directory-prefix=/tmp \
+    &&  chmod u+rx /tmp/install-android-sdk \
+    && /tmp/install-android-sdk $SDK_INSTALL_PARAMS
+
 RUN    cd /android-sdk-linux/tools/bin \
     && ./sdkmanager  "build-tools;28.0.3" \
     && ./sdkmanager "platforms;android-28"
 
-RUN cd / && wget https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz &&  tar -xvf cmake-3.19.2.tar.gz && rm *.tar.gz \
+RUN cd / && wget --quiet https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz &&  tar -xf cmake-3.19.2.tar.gz && rm *.tar.gz \
    && cd  cmake-3.19.2 && time ./configure && time make -j4 && time make install && time make clean && cd / && rm -rf /cmake-3.19.2
 
 ENV ANDROID_SDK_ROOT=/android-sdk-linux
