@@ -111,8 +111,8 @@ RUN    cd /android-sdk-linux/tools/bin \
     && ./sdkmanager  "build-tools;28.0.3" \
     && ./sdkmanager "platforms;android-28"
 
-RUN cd / && wget --quiet https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz &&  tar -xf cmake-3.19.2.tar.gz && rm *.tar.gz \
-   && cd  cmake-3.19.2 && time ./configure && time make -j4 && time make install && time make clean && cd / && rm -rf /cmake-3.19.2
+RUN apt install build-essential g++ -y && cd / && wget --quiet https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz &&  tar -xf cmake-3.19.2.tar.gz && rm *.tar.gz \
+   && cd  cmake-3.19.2 && time ./configure && time make -j4 && time make install && time make clean && cd / && rm -rf /cmake-3.19.2 && apt remove build-essential g++ -y
 
 ENV ANDROID_SDK_ROOT=/android-sdk-linux
 ENV NDK_VERSION=r21b
