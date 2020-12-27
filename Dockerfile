@@ -11,7 +11,7 @@ RUN export QT_HOST_BUILD=/6.0.0 && export PATH=$ANDROID_NDK_HOME/toolchains/llvm
 FROM debian:10
 
 RUN apt-get update && apt-get upgrade -y
-COPY --from=builder2 /usr/local /usr/local
+COPY --from=builder-arm /usr/local /usr/local
 
 ARG NDK_VERSION=r21b
 ARG SDK_INSTALL_PARAMS=platform-tool,build-tools-28.0.3
